@@ -5,11 +5,13 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion 27
+    compileOptions.incremental = false
+    compileSdkVersion compileVersion
+    buildToolsVersion toolsVersion
     defaultConfig {
         applicationId "com.example"
-        minSdkVersion 21
-        targetSdkVersion 27
+        minSdkVersion minVersion
+        targetSdkVersion targetVersion
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -23,14 +25,43 @@ android {
     dataBinding {
         enabled = true
     }
+    flavorDimensions 'environment'
+    productFlavors {
+        prod {
+            dimension 'environment'
+        }
+        staging {
+            dimension 'environment'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+configurations.all {
+    // Check for updates every build
+    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "com.android.support:appcompat-v7:$supportVersion"
+
     implementation 'com.github.bolein.controllers:router:feature_2.0-SNAPSHOT'
+    implementation ('com.github.bolein.controllers:coroutines:feature_2.0-SNAPSHOT', {
+        changing = true
+    })
+    implementation project(':model')
+
+    kapt "com.android.databinding:compiler:$gradlePluginVer"
+    kapt "com.google.dagger:dagger-compiler:$daggerVer"
+
+    // Analytics and tools
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
+    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
