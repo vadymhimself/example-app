@@ -5,7 +5,7 @@
 
         <variable
             name="controller"
-            type="com.example.HelloWorldController"/>
+            type="com.example.ToastTestController"/>
     </data>
 
     <RelativeLayout
@@ -17,8 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="Hello world!"
-            android:onClick="@{controller::onClick}"/>
+            android:text="Hello world!"/>
 
     </RelativeLayout>
 </layout>
