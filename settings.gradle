@@ -1,1 +1,3 @@
-include ':app', ':model'
+include ':app', ':model', ':router', ':coroutines'
+project(":router").projectDir = file("controllers/router")
+project(":coroutines").projectDir = file("controllers/coroutines")

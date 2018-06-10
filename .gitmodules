@@ -1,0 +1,4 @@
+[submodule "controllers"]
+	path = controllers
+	url = git@github.com:bolein/controllers.git
+	branch = feature_2.0

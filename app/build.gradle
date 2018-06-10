@@ -40,6 +40,12 @@ android {
     }
 }
 
+kotlin {
+    experimental {
+        coroutines "enable"
+    }
+}
+
 configurations.all {
     // Check for updates every build
     resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
@@ -50,10 +56,8 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "com.android.support:appcompat-v7:$supportVersion"
 
-    implementation 'com.github.bolein.controllers:router:feature_2.0-SNAPSHOT'
-    implementation ('com.github.bolein.controllers:coroutines:feature_2.0-SNAPSHOT', {
-        changing = true
-    })
+    implementation project(':router')
+    implementation project(':coroutines')
     implementation project(':model')
 
     kapt "com.android.databinding:compiler:$gradlePluginVer"
