@@ -54,11 +54,14 @@ configurations.all {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+
     implementation "com.android.support:appcompat-v7:$supportVersion"
 
     implementation project(':router')
     implementation project(':coroutines')
     implementation project(':model')
+    implementation project(':misc')
 
     kapt "com.android.databinding:compiler:$gradlePluginVer"
     kapt "com.google.dagger:dagger-compiler:$daggerVer"

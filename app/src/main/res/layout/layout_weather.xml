@@ -19,13 +19,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            android:visibility="@{!controller.progress}">
 
             <TextView
                 android:id="@+id/tv_city"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="The weather in Chicago"/>
+                android:text="The weather in Chicago"/>
 
             <TextView
                 android:id="@+id/tv_temp"
@@ -41,6 +42,6 @@
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:layout_gravity="center"
-            android:visibility="gone"/>
+            android:visibility="@{controller.progress}"/>
     </FrameLayout>
 </layout>
