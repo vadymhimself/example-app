@@ -3,6 +3,7 @@ package com.example.domain;
 import com.example.MainActivity;
 import dagger.Component;
 import ru.sberleasing.model.analytics.Analytics;
+import ru.sberleasing.model.api.Api;
 import ru.sberleasing.model.service.ModelComponent;
 
 @AppScope
@@ -14,5 +15,7 @@ public interface AppComponent {
     void inject(MainActivity activity);
 
     Analytics analytics();
+
+    Api api();
 
 }
