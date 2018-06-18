@@ -5,7 +5,6 @@ import com.controllers.Controller
 import com.controllers.async
 import com.example.databinding.LayoutWeatherBinding
 import com.example.domain.App
-import com.example.misc.handleError
 
 class WeatherController : Controller<LayoutWeatherBinding>() {
 
@@ -13,14 +12,10 @@ class WeatherController : Controller<LayoutWeatherBinding>() {
 
     init {
         async {
-            progress.set(true)
             try {
+                progress.set(true)
                 val weather = App.require().api().getWeatherForCity("Chicago")
-                binding?.run {
-                    tvTemp.text = "${weather.temp} C"
-                }
-            } catch (e: Exception) {
-                handleError(e)
+                binding?.tvTemp?.text = "${weather.temp} C"
             } finally {
                 progress.set(false)
             }

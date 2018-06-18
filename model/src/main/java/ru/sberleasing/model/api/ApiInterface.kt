@@ -8,5 +8,5 @@ import ru.sberleasing.model.data.WeatherResponse
 internal interface ApiInterface {
 
     @GET("weather")
-    fun getWeatherForQuery(@Query("q") query: String) : Deferred<WeatherResponse>
+    suspend fun getWeatherForQuery(@Query("q") query: String): WeatherResponse
 }

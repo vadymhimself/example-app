@@ -10,6 +10,6 @@ class Api @Inject internal constructor(
 
     suspend fun getWeatherForCity(cityName: String) : Weather {
         delay(2000)
-        return apiInterface.getWeatherForQuery(cityName).await().main
+        return apiInterface.getWeatherForQuery(cityName).main
     }
 }

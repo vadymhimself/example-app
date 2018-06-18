@@ -2,6 +2,7 @@ package ru.sberleasing.model.api
 
 import com.google.gson.Gson
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.experimental.CoroutineCallAdapterFactory
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.experimental.CoroutineCallbackAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.multibindings.IntoSet
@@ -9,6 +10,7 @@ import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.CallbackAdapter
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import ru.sberleasing.model.BuildConfig
@@ -53,7 +55,7 @@ internal class ApiModule {
                 .baseUrl(baseUrl)
                 .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create(gson))
-                .addCallAdapterFactory(CoroutineCallAdapterFactory())
+                .addCallbackAdapterFactory(CoroutineCallbackAdapterFactory())
                 .build()
     }
 

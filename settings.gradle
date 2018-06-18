@@ -1,4 +1,4 @@
-include ':app', ':model', ':router', ':coroutines', ':misc'
+include ':app', ':model', ':router', ':coroutines', ':misc', ':retrofit2-kotlin-coroutines-adapter'
 project(":router").projectDir = file("controllers/router")
 project(":coroutines").projectDir = file("controllers/coroutines")
 project(":misc").projectDir = file("controllers/misc")

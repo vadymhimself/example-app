@@ -54,6 +54,8 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    api "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlin_coroutines_version"
+    api "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlin_coroutines_version"
 
     // Bus
     api 'org.greenrobot:eventbus:3.1.1'
@@ -65,10 +67,13 @@ dependencies {
 
 
     // Networking
-    implementation "com.squareup.retrofit2:retrofit:$retrofitVer"
-    implementation "com.squareup.retrofit2:converter-gson:$retrofitVer"
+//    implementation "com.squareup.retrofit2:retrofit:$retrofitVer"
+    implementation 'com.github.square.retrofit:retrofit:363b05be9f' // callback adapters wip
+    implementation ("com.squareup.retrofit2:converter-gson:$retrofitVer", {
+        exclude group: 'com.squareup.retrofit2', module: 'retrofit'
+    })
     implementation "com.squareup.okhttp3:logging-interceptor:$okHttpVer"
-    implementation 'com.jakewharton.retrofit:retrofit2-kotlin-coroutines-experimental-adapter:1.0.0'
+    implementation project(':retrofit2-kotlin-coroutines-adapter')
 
 
     // Persistence
