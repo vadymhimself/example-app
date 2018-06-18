@@ -73,7 +73,8 @@ dependencies {
         exclude group: 'com.squareup.retrofit2', module: 'retrofit'
     })
     implementation "com.squareup.okhttp3:logging-interceptor:$okHttpVer"
-    implementation project(':retrofit2-kotlin-coroutines-adapter')
+//    implementation project(':retrofit2-kotlin-coroutines-adapter')
+    implementation 'com.github.bolein:retrofit2-kotlin-coroutines-adapter:1616923665'
 
 
     // Persistence
