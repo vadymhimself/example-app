@@ -56,6 +56,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     api "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlin_coroutines_version"
     api "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlin_coroutines_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-rx2:$kotlin_coroutines_version"
 
     // Bus
     api 'org.greenrobot:eventbus:3.1.1'
@@ -73,26 +74,29 @@ dependencies {
         exclude group: 'com.squareup.retrofit2', module: 'retrofit'
     })
     implementation "com.squareup.okhttp3:logging-interceptor:$okHttpVer"
-//    implementation project(':retrofit2-kotlin-coroutines-adapter')
-    implementation 'com.github.bolein:retrofit2-kotlin-coroutines-adapter:1616923665'
+    implementation project(':retrofit2-kotlin-coroutines-adapter')
+//    implementation 'com.github.bolein:retrofit2-kotlin-coroutines-adapter:1616923665'
 
 
     // Persistence
-    implementation "android.arch.core:runtime:$roomVer"
+    implementation "android.arch.core:runtime:$archComponentsVer"
     implementation ("android.arch.persistence.room:runtime:$roomVer", {
         exclude group: 'android.arch.core', module: 'runtime'
     })
-    testImplementation "android.arch.persistence.room:testing:$roomVer"
+    implementation ("android.arch.persistence.room:rxjava2:$roomVer", {
+        exclude group: 'android.arch.core', module: 'runtime'
+    })
     kapt "android.arch.persistence.room:compiler:$roomVer"
 
 
     implementation group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.2'
+
+
+    testImplementation 'junit:junit:4.12'
+    testImplementation "android.arch.persistence.room:testing:$roomVer"
     testImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-
-    testImplementation 'junit:junit:4.12'
-
     api('com.crashlytics.sdk.android:crashlytics:2.9.1@aar') {
         transitive = true
     }
