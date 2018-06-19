@@ -14,8 +14,8 @@ class WeatherController : Controller<LayoutWeatherBinding>() {
         async {
             try {
                 progress.set(true)
-                val weather = App.require().api().getWeatherForSavedCities()
-                binding?.tvTemp?.text = "${weather} C"
+                val cities = App.require().api().getWeatherForSavedCities()
+                binding?.tvTemp?.text = "${cities.values.map { it.await().temp }} C"
             } finally {
                 progress.set(false)
             }
