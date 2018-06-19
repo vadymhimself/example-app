@@ -2,6 +2,7 @@ package ru.sberleasing.model.api
 
 import kotlinx.coroutines.experimental.CoroutineStart
 import kotlinx.coroutines.experimental.Deferred
+import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
 import kotlinx.coroutines.experimental.delay
 import kotlinx.coroutines.experimental.reactive.awaitFirst
@@ -27,7 +28,7 @@ class Api @Inject internal constructor(
     suspend fun getWeatherForSavedCities(): Map<City, Deferred<Weather>> {
         return cityDao.getAllCities() // get rx flowable from room
                 .awaitFirst() // suspend for first
-                .associate {  it to  async { getWeatherForCity(it.name) } }
+                .associate { it to async { getWeatherForCity(it.name) } } // spawn new async coroutines to execute all requests in parallel
     }
 
 }
