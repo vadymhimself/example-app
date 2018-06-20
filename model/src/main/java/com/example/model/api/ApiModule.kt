@@ -1,25 +1,21 @@
 package com.example.model.api
 
+import com.example.model.BuildConfig
+import com.example.model.userdata.UserData
 import com.google.gson.Gson
-import com.jakewharton.retrofit2.adapter.kotlin.coroutines.experimental.CoroutineCallAdapterFactory
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.experimental.CoroutineCallbackAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.multibindings.IntoSet
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
-import okhttp3.Request
 import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.CallbackAdapter
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import com.example.model.BuildConfig
-import com.example.model.userdata.UserData
 import java.util.concurrent.Executor
-
-import javax.inject.Singleton
 import java.util.concurrent.TimeUnit
 import javax.inject.Named
+import javax.inject.Singleton
 
 @Module
 internal class ApiModule {
@@ -83,7 +79,7 @@ internal class ApiModule {
 
     @Provides
     @Singleton
-    internal fun provideRetrofitInterface(retrofit: Retrofit): ApiInterface {
-        return retrofit.create(ApiInterface::class.java)
+    internal fun provideRetrofitInterface(retrofit: Retrofit): NetworkInterface {
+        return retrofit.create(NetworkInterface::class.java)
     }
 }

@@ -1,6 +1,5 @@
 package com.example.model.api
 
-import android.util.Log
 import com.example.model.data.AccessToken
 import com.example.model.data.User
 import com.example.model.persistance.CityDao
@@ -10,18 +9,18 @@ import javax.inject.Singleton
 
 @Singleton
 class Api @Inject internal constructor(
-        private val apiInterface: ApiInterface,
+        private val networkInterface: NetworkInterface,
         private val cityDao: CityDao,
         private val userData: UserData
 ) {
 
     private suspend fun getAccessToken(url: String, clientId: String,
                                        clientSecret: String, code: String): AccessToken {
-        return apiInterface.getAccessToken(url, clientId, clientSecret, code)
+        return networkInterface.getAccessToken(url, clientId, clientSecret, code)
     }
 
     suspend fun getCurrentUser(): User {
-        return apiInterface.getCurrentUser()
+        return networkInterface.getCurrentUser()
     }
 
     suspend fun login(code: String): User {
@@ -34,6 +33,14 @@ class Api @Inject internal constructor(
         userData.accessToken = token
 
         return getCurrentUser()
+    }
+
+    suspend fun getFollowers(login: String) : List<User> {
+        return networkInterface.getFollowers(login)
+    }
+
+    suspend fun getFollowing(login: String) : List<User> {
+        return networkInterface.getFollowing(login)
     }
 
 }

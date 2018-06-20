@@ -46,6 +46,11 @@ kotlin {
     }
 }
 
+kapt {
+    generateStubs = true
+}
+
+
 configurations.all {
     // Check for updates every build
     resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
@@ -61,6 +66,7 @@ dependencies {
     implementation project(':coroutines')
     implementation project(':model')
     implementation project(':misc')
+    implementation project(':baseadapter')
 
     kapt "com.android.databinding:compiler:$gradlePluginVer"
     kapt "com.google.dagger:dagger-compiler:$daggerVer"

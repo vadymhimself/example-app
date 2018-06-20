@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="controller"
+            type="com.example.misc.ListVM"/>
+
+    </data>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+        <com.controllers.misc.views.HackyRecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            adapter="@{controller.adapter}"/>
+
+        <ProgressBar
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_centerInParent="true"
+            android:visibility="@{controller.adapter == null}"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="This list is empty."
+            android:visibility="@{controller.adapter != null &amp;&amp; controller.adapter.itemCount == 0}"/>
+
+    </RelativeLayout>
+</layout>

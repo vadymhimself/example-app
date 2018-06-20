@@ -1,29 +1,27 @@
 package com.example.github.profile
 
-import android.app.AlertDialog
-import android.app.Dialog
-import android.app.ProgressDialog
 import android.databinding.Bindable
 import android.databinding.ObservableBoolean
 import android.support.v7.widget.Toolbar
 import android.view.MenuItem
 import com.controllers.Controller
-import com.controllers.ControllerPagerAdapter
 import com.example.R
 import com.example.databinding.LayoutProfileBinding
 import com.example.model.data.User
+import eu.theappshop.baseadapter.adapter.BaseAdapter
 
 
 class ProfileController(
         @Bindable val user: User
 ) : Controller<LayoutProfileBinding>(), Toolbar.OnMenuItemClickListener {
 
-    val pagerAdapter = ControllerPagerAdapter(this)
     val isFollowing = ObservableBoolean()
+    val adapter: BaseAdapter<*>
 
     init {
+        adapter = BaseAdapter(listOf(FollowersVM(this, user)))
 //        pagerAdapter.addController(RepositoriesController(username))
-//        pagerAdapter.addController(FollowersController(username))
+//        pagerAdapter.addController(FollowersVM(username))
 //        pagerAdapter.addController(FollowingController(username))
 //
 //        Request.with(this, Api::class.java)
@@ -31,13 +29,6 @@ class ProfileController(
 //                .onError({ e -> isFollowing.set(false) }) // error means not
 //                // following
 //                .execute({ o -> isFollowing.set(true) })
-//
-//        Request.with(this, Api::class.java)
-//                .create({ gitHubService -> gitHubService.getUser(username) })
-//                .execute({ user ->
-//                    this.user = user
-//                    notifyPropertyChanged(BR.user)
-//                })
     }
 
     internal fun toggleFollowing(user: User) {
@@ -72,7 +63,5 @@ class ProfileController(
         return false
     }
 
-    override fun getLayoutId(): Int {
-        return R.layout.layout_profile
-    }
+    override fun getLayoutId() = R.layout.layout_profile
 }

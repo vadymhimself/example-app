@@ -5,7 +5,7 @@ import com.example.model.data.User
 import com.example.model.data.WeatherResponse
 import retrofit2.http.*
 
-internal interface ApiInterface {
+internal interface NetworkInterface {
 
     @GET("weather")
     suspend fun getWeatherForQuery(@Query("q") query: String): WeatherResponse
@@ -19,4 +19,10 @@ internal interface ApiInterface {
 
     @GET("/user")
     suspend fun getCurrentUser(): User
+
+    @GET("/users/{username}/followers")
+    suspend fun getFollowers(@Path("username") username: String): List<User>
+
+    @GET("/users/{username}/following")
+    suspend fun getFollowing(@Path("username") username: String): List<User>
 }
