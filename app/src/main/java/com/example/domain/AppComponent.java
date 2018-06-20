@@ -2,9 +2,9 @@ package com.example.domain;
 
 import com.example.MainActivity;
 import dagger.Component;
-import ru.sberleasing.model.analytics.Analytics;
-import ru.sberleasing.model.api.Api;
-import ru.sberleasing.model.service.ModelComponent;
+import com.example.model.analytics.Analytics;
+import com.example.model.api.Api;
+import com.example.model.service.ModelComponent;
 
 @AppScope
 @Component(dependencies = {ModelComponent.class})

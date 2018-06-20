@@ -6,10 +6,10 @@ import android.content.Context;
 import android.support.annotation.*;
 import android.support.v4.content.ContextCompat;
 import com.squareup.leakcanary.LeakCanary;
-import ru.sberleasing.model.analytics.Analytics;
-import ru.sberleasing.model.event.Bus;
-import ru.sberleasing.model.service.ContextModule;
-import ru.sberleasing.model.service.DaggerModelComponent;
+import com.example.model.analytics.Analytics;
+import com.example.model.event.Bus;
+import com.example.model.service.ContextModule;
+import com.example.model.service.DaggerModelComponent;
 
 import javax.inject.Inject;
 

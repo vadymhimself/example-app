@@ -44,4 +44,4 @@
 -dontwarn android.arch.util.paging.CountedDataSource
 -dontwarn android.arch.persistence.room.paging.LimitOffsetDataSource
 # keep persistance package for runtime lookups
--keep class ru.sberleasing.model.persistance.** { *; }
+-keep class com.example.model.persistance.** { *; }

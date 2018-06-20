@@ -2,3 +2,7 @@
 	path = controllers
 	url = git@github.com:bolein/controllers.git
 	branch = master
+[submodule "retrofit2-kotlin-coroutines-adapter"]
+	path = retrofit2-kotlin-coroutines-adapter
+	url = git@github.com:bolein/retrofit2-kotlin-coroutines-adapter.git
+	branch = suspend

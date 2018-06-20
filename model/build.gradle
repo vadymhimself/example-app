@@ -36,7 +36,7 @@ android {
     productFlavors {
         prod {
             dimension 'environment'
-            buildConfigField "String", "API_BASE_URL", '"http://api.openweathermap.org/data/2.5/"'
+            buildConfigField "String", "API_BASE_URL", '"https://api.github.com/"'
         }
         staging {
             dimension 'environment'
@@ -74,12 +74,11 @@ dependencies {
         exclude group: 'com.squareup.retrofit2', module: 'retrofit'
     })
     implementation "com.squareup.okhttp3:logging-interceptor:$okHttpVer"
-//    implementation project(':retrofit2-kotlin-coroutines-adapter')
-    implementation 'com.github.bolein:retrofit2-kotlin-coroutines-adapter:1616923665'
+    implementation project(':retrofit2-kotlin-coroutines-adapter')
 
 
     // Persistence
-    implementation "android.arch.core:runtime:$archComponentsVer"
+    api "android.arch.core:runtime:$archComponentsVer"
     implementation ("android.arch.persistence.room:runtime:$roomVer", {
         exclude group: 'android.arch.core', module: 'runtime'
     })

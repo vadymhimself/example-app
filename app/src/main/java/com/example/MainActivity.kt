@@ -2,6 +2,7 @@ package com.example
 
 import android.os.Bundle
 import com.controllers.ControllerActivity
+import com.example.github.auth.AuthController
 
 class MainActivity : ControllerActivity() {
 
@@ -11,7 +12,7 @@ class MainActivity : ControllerActivity() {
         setControllerContainer(R.id.container)
 
         if (savedInstanceState == null) {
-            show(HelloWorldController(), 0, 0)
+            show(AuthController(), 0, 0)
         }
     }
 }

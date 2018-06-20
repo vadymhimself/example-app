@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="ru.sberleasing.model">
+          package="com.example.model">
 
     <application
         android:allowBackup="true"
