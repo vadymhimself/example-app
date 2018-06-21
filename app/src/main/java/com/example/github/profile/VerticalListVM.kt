@@ -1,6 +1,9 @@
 package com.example.github.profile
 
+import android.databinding.Bindable
+import com.controllers.BindableProperty
 import com.controllers.Controller
+import com.controllers.async
 import com.example.BR
 import com.example.R
 import com.example.misc.ListVM
@@ -18,16 +21,18 @@ class VerticalListVM<T : VM>(
         private val getVms: suspend () -> List<T>
 ) : ListVM() {
 
-    override var adapter: BaseAdapter<T>? by BindableDelegate(BR.adapter)
+    @get:Bindable
+    override var adapter: BaseAdapter<T>? by BindableProperty(BR.adapter)
 
     init {
         updateVms()
     }
 
     fun updateVms() = parent.async {
-        // cal the provider function and use the results
+        // call the provider function and use the results
         val vms = getVms()
         // don't need to call notifyPropertyChanged, it's called by the delegate
+        // of the property
         adapter = BaseAdapter(vms)
     }
 
