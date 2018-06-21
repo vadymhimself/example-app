@@ -18,13 +18,12 @@ class ProfileController(
     val adapter: BaseAdapter<*>
 
     init {
-        val api = App.require().api()
         val followersVm = VerticalListVM(this, {
-           api.getFollowers(user.login).map { UserVM(this, it) }
+            App.require().api().getFollowers(user.login).map { UserVM(this, it) }
         })
 
         val followingVm = VerticalListVM(this, {
-            api.getFollowing(user.login).map { UserVM(this, it) }
+            App.require().api().getFollowing(user.login).map { UserVM(this, it) }
         })
 
         adapter = BaseAdapter(listOf(followersVm, followingVm))

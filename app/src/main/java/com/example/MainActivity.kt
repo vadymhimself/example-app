@@ -15,4 +15,8 @@ class MainActivity : ControllerActivity() {
             show(AuthController(), 0, 0)
         }
     }
+
+    override fun onPause() {
+        super.onPause()
+    }
 }
