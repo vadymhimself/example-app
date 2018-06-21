@@ -63,7 +63,7 @@ dependencies {
     implementation "com.android.support:appcompat-v7:$supportVersion"
 
     implementation project(':router')
-    implementation project(':coroutines')
+    implementation project(':kotlin-extentions')
     implementation project(':model')
     implementation project(':misc')
     implementation project(':baseadapter')
