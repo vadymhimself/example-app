@@ -1,8 +1,10 @@
 package com.example.model.api
 
 import com.example.model.data.AccessToken
+import com.example.model.data.Repository
 import com.example.model.data.User
 import com.example.model.data.WeatherResponse
+import retrofit2.Call
 import retrofit2.http.*
 
 internal interface NetworkInterface {
@@ -25,4 +27,8 @@ internal interface NetworkInterface {
 
     @GET("/users/{username}/following")
     suspend fun getFollowing(@Path("username") username: String): List<User>
+
+    @GET("/users/{id}/repos")
+    suspend fun getUserRepositories(@Path("id") username: String): List<Repository>
+
 }

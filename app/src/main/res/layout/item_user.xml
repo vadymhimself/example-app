@@ -5,28 +5,31 @@
 
         <variable
             name="viewModel"
-            type="com.example.github.profile.UserVM"/>
+            type="com.example.github.profile.UserVM" />
     </data>
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="8dp">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick='@{viewModel::onUserClick}'>
 
         <ImageView
 
             android:id="@+id/image_view"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:src="@{viewModel.user.avatarUrl}"/>
+            android:src="@{viewModel.user.avatarUrl}" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
             android:layout_toEndOf="@+id/image_view"
             android:lines="1"
-            android:layout_marginLeft="8dp"
-            android:text="@{viewModel.user.login}"/>
+            android:text="@{viewModel.user.login}" />
 
     </RelativeLayout>
 </layout>

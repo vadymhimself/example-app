@@ -8,6 +8,7 @@ import com.example.BR
 import com.example.R
 import com.example.misc.ListVM
 import eu.theappshop.baseadapter.adapter.BaseAdapter
+import eu.theappshop.baseadapter.vm.TitledVM
 import eu.theappshop.baseadapter.vm.VM
 
 /**
@@ -19,7 +20,7 @@ class VerticalListVM<T : VM>(
         private val parent: Controller<*>,
         // check out how we pass a function that provides a list of users
         private val getVms: suspend () -> List<T>
-) : ListVM() {
+) : ListVM(), TitledVM {
 
     @get:Bindable
     override var adapter: BaseAdapter<T>? by BindableProperty(BR.adapter)
@@ -37,4 +38,6 @@ class VerticalListVM<T : VM>(
     }
 
     override fun getLayoutId() = R.layout.item_list
+
+    override fun getTitle() = "Stubb"
 }

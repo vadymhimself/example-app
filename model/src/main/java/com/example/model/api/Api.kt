@@ -1,6 +1,7 @@
 package com.example.model.api
 
 import com.example.model.data.AccessToken
+import com.example.model.data.Repository
 import com.example.model.data.User
 import com.example.model.persistance.CityDao
 import com.example.model.userdata.UserData
@@ -41,6 +42,10 @@ class Api @Inject internal constructor(
 
     suspend fun getFollowing(login: String) : List<User> {
         return networkInterface.getFollowing(login)
+    }
+
+    suspend fun getUserRepo(userName: String) : List<Repository> {
+        return networkInterface.getUserRepositories(userName)
     }
 
 }
