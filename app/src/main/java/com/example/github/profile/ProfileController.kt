@@ -7,29 +7,42 @@ import com.controllers.Controller
 import com.example.R
 import com.example.databinding.LayoutProfileBinding
 import com.example.domain.App
+import com.example.github.repositories.RepoVM
 import com.example.model.data.User
 import eu.theappshop.baseadapter.adapter.BaseAdapter
 
-
 class ProfileController(
-        @Bindable val user: User
+  @Bindable val user: User
 ) : Controller<LayoutProfileBinding>(), Toolbar.OnMenuItemClickListener {
 
-    val adapter: BaseAdapter<*>
+  val adapter: BaseAdapter<*>
 
-    init {
-        val followersVm = VerticalListVM(this, {
-            App.require().api().getFollowers(user.login).map { UserVM(this, it) }
-        })
+  init {
+    val followersVm = VerticalListVM(this, {
+      App.require()
+          .api()
+          .getFollowers(user.login)
+          .map { UserVM(this, it) }
+    })
 
-        val followingVm = VerticalListVM(this, {
-            App.require().api().getFollowing(user.login).map { UserVM(this, it) }
-        })
+    val followingVm = VerticalListVM(this, {
+      App.require()
+          .api()
+          .getFollowing(user.login)
+          .map { UserVM(this, it) }
+    })
 
-        adapter = BaseAdapter(listOf(followersVm, followingVm))
-    }
+    val repoVm = VerticalListVM(this, {
+      App.require()
+          .api()
+          .getUserRepo(user.login)
+          .map { RepoVM(this, it) }
+    })
 
-    internal fun toggleFollowing(user: User) {
+    adapter = BaseAdapter(listOf(followersVm, followingVm, repoVm))
+  }
+
+  internal fun toggleFollowing(user: User) {
 //        AlertDialog.Builder(activity)
 //                .setTitle(if (isFollowing.get()) "Unfollow?" else "Follow?")
 //                .setPositiveButton("OK") { dialog, which ->
@@ -49,17 +62,17 @@ class ProfileController(
 //                            .dismiss()
 //                }
 //                .show()
-    }
+  }
 
-    override fun onMenuItemClick(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.action_follow -> {
-                toggleFollowing(user)
-                return true
-            }
-        }
-        return false
+  override fun onMenuItemClick(item: MenuItem): Boolean {
+    when (item.itemId) {
+      R.id.action_follow -> {
+        toggleFollowing(user)
+        return true
+      }
     }
+    return false
+  }
 
-    override fun getLayoutId() = R.layout.layout_profile
+  override fun getLayoutId() = R.layout.layout_profile
 }

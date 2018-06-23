@@ -1,35 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
+  <data>
 
-        <variable
-            name="viewModel"
-            type="com.example.misc.ListVM"/>
+    <variable
+        name="viewModel"
+        type="com.example.misc.ListVM"
+        />
 
-    </data>
+  </data>
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+  <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+      android:id="@+id/rl_root"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      >
 
-        <com.controllers.misc.views.HackyRecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            adapter="@{viewModel.adapter}"/>
+    <com.controllers.misc.views.HackyRecyclerView
+        android:id="@+id/rv_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        adapter="@{viewModel.adapter}"
+        tools:listitem="@layout/item_repository"
+        />
 
-        <ProgressBar
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:layout_centerInParent="true"
-            android:visibility="@{viewModel.adapter == null}"/>
+    <ProgressBar
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_centerInParent="true"
+        android:visibility="@{viewModel.adapter == null}"
+        />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="This list is empty."
-            android:visibility="@{viewModel.adapter != null &amp;&amp; viewModel.adapter.itemCount == 0}"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="This list is empty."
+        android:visibility="@{viewModel.adapter != null &amp;&amp; viewModel.adapter.itemCount == 0}"
+        />
 
-    </RelativeLayout>
+  </RelativeLayout>
 </layout>
