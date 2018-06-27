@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+  <data>
+
+    <variable
+        name="controller"
+        type="com.example.github.repositories.RepositoriesController" />
+
+    <import type="com.controllers.misc.utils.UiUtils" />
+  </data>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+      <android.support.v7.widget.Toolbar
+          android:id="@+id/toolbar"
+          title='@{controller.title}'
+          menu="@{controller.menuId}"
+          itemClickListener="@{controller}"
+          android:layout_width="match_parent"
+          android:layout_height="?attr/actionBarSize"
+          android:layout_marginTop="@{UiUtils.getStatusBarHeight(controller.activity)}"/>
+    </android.support.design.widget.AppBarLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_root"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+      <com.controllers.misc.views.HackyRecyclerView
+          android:id="@+id/rv_list"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          adapter="@{controller.adapter}"
+          tools:listitem="@layout/item_repository"
+          />
+
+      <ProgressBar
+          android:layout_width="64dp"
+          android:layout_height="64dp"
+          android:layout_centerInParent="true"
+          android:visibility="@{controller.adapter == null}"
+          />
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_centerInParent="true"
+          android:text="This list is empty."
+          android:visibility="@{controller.adapter != null &amp;&amp; controller.adapter.itemCount == 0}"
+          />
+
+    </RelativeLayout>
+
+  </LinearLayout>
+</layout>

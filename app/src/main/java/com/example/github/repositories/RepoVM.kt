@@ -4,6 +4,7 @@ import com.controllers.Controller
 import com.example.R
 import com.example.model.data.Repository
 import com.example.model.data.User
+import eu.theappshop.baseadapter.vm.DiffVM
 import eu.theappshop.baseadapter.vm.VM
 
 /**
@@ -14,6 +15,11 @@ import eu.theappshop.baseadapter.vm.VM
 class RepoVM(
   val parent: Controller<*>,
   val repo: Repository
-) : VM {
+) : DiffVM {
+
+  override fun isEqualItem(vm: VM?) = vm is RepoVM
+
+  override fun isEqualContent(vm: VM?) = this == vm
+
   override fun getLayoutId() = R.layout.item_repository
 }

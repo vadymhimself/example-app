@@ -19,7 +19,8 @@ import eu.theappshop.baseadapter.vm.VM
 class VerticalListVM<T : VM>(
   private val parent: Controller<*>,
     // check out how we pass a function that provides a list of users
-  private val getVms: suspend () -> List<T>
+  private val getVms: suspend () -> List<T>,
+    private val title : String = "Stub"
 ) : ListVM(), TitledVM {
 
   @get:Bindable
@@ -39,5 +40,5 @@ class VerticalListVM<T : VM>(
 
   override fun getLayoutId() = R.layout.item_list
 
-  override fun getTitle() = "Stubb"
+  override fun getTitle() = title
 }
