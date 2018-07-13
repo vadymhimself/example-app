@@ -12,7 +12,7 @@ import java.io.Serializable
 data class Repository(
         var name: String,
         var description: String,
-        var language: String,
+        var language: String?,
         @SerializedName("stargazers_count") var stargazersCount :Int,
         var owner: User,
         val login: String,

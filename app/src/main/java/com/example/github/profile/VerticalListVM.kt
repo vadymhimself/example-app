@@ -17,27 +17,28 @@ import eu.theappshop.baseadapter.vm.VM
  * and the progress be shown in the meantime.
  */
 class VerticalListVM<T : VM>(
-        private val parent: Controller<*>,
-        // check out how we pass a function that provides a list of users
-        private val getVms: suspend () -> List<T>
+  private val parent: Controller<*>,
+    // check out how we pass a function that provides a list of users
+  private val getVms: suspend () -> List<T>,
+    private val title : String = "Stub"
 ) : ListVM(), TitledVM {
 
-    @get:Bindable
-    override var adapter: BaseAdapter<T>? by BindableProperty(BR.adapter)
+  @get:Bindable
+  override var adapter: BaseAdapter<T>? by BindableProperty(BR.adapter)
 
-    init {
-        updateVms()
-    }
+  init {
+    updateVms()
+  }
 
-    fun updateVms() = parent.async {
-        // call the provider function and use the results
-        val vms = getVms()
-        // don't need to call notifyPropertyChanged, it's called by the delegate
-        // of the property
-        adapter = BaseAdapter(vms)
-    }
+  fun updateVms() = parent.async {
+    // call the provider function and use the results
+    val vms = getVms()
+    // don't need to call notifyPropertyChanged, it's called by the delegate
+    // of the property
+    adapter = BaseAdapter(vms)
+  }
 
-    override fun getLayoutId() = R.layout.item_list
+  override fun getLayoutId() = R.layout.item_list
 
-    override fun getTitle() = "Stubb"
+  override fun getTitle() = title
 }

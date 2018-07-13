@@ -22,15 +22,15 @@
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
+                title='@{controller.controllerTitle}'
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                title='@{controller.controllerTitle}'
                 android:layout_marginTop="@{UiUtils.getStatusBarHeight(controller.activity)}" />
         </android.support.design.widget.AppBarLayout>
 
         <FrameLayout
-            android:id="@+id/fl_vm_container"
-            vmContent='@{controller.viewModel}'
+            android:id="@+id/vs_content"
+            contentVM='@{controller.viewModel}'
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </LinearLayout>
