@@ -9,14 +9,14 @@ import com.controllers.Controller
 import com.controllers.async
 import com.example.BR
 import com.example.R
-import com.example.databinding.LayoutFilterableVmBinding
+import com.example.databinding.LayoutRepositoriesBinding
 import com.example.domain.App
 import eu.theappshop.baseadapter.adapter.FilterableAdapter
 import eu.theappshop.baseadapter.misc.Filter
 
 class RepositoriesController(
   private val login: String
-) : Controller<LayoutFilterableVmBinding>(), Toolbar.OnMenuItemClickListener {
+) : Controller<LayoutRepositoriesBinding>(), Toolbar.OnMenuItemClickListener {
 
   val menuId = R.menu.menu_filter
 

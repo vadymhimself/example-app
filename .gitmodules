@@ -5,7 +5,7 @@
 [submodule "retrofit2-kotlin-coroutines-adapter"]
 	path = retrofit2-kotlin-coroutines-adapter
 	url = git@github.com:bolein/retrofit2-kotlin-coroutines-adapter.git
-	branch = suspend
+	branch = master
 [submodule "baseadapter"]
 	path = baseadapter
 	url = git@github.com:skiff2011/baseadapter.git
