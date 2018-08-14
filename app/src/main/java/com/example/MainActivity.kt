@@ -1,24 +1,51 @@
 package com.example
 
 import android.os.Bundle
-import com.controllers.ControllerActivity
+import android.support.v7.app.AppCompatActivity
+import com.controllers.Controller
 import com.controllers.FragmentTransitions
+import com.controllers.RouterBuilder
+import com.controllers.core.Router
 import com.example.domain.App
 import com.example.github.auth.AuthController
 import org.greenrobot.eventbus.Subscribe
 
-class MainActivity : ControllerActivity() {
+class MainActivity : AppCompatActivity() {
 
-    val container = R.id.container
+    lateinit var mainRouter : Router<Controller<*>>
+
+    val containerId = R.id.container
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+        super.onCreate(noFragmentsRestore(savedInstanceState))
         setContentView(R.layout.activity_main)
-        setControllerContainer(container)
+
+        mainRouter = RouterBuilder<Controller<*>>()
+            .with(findViewById(containerId))
+            .build()
 
         if (savedInstanceState == null) {
-            onTransitionEvent(Show(AuthController()))
+            onTransitionEvent(Show(AuthController(), 0, 0))
         }
+    }
+
+  override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
+    super.onRestoreInstanceState(savedInstanceState)
+    // if not empty, rerender upon recreation
+    mainRouter.top?.let {
+      mainRouter.make(FragmentTransitions.Render(containerId, this, it))
+    }
+  }
+
+  /**
+     * Improve bundle to prevent restoring of fragments.
+     *
+     * @param bundle bundle container
+     * @return improved bundle with removed "fragments parcelable"
+     */
+    private fun noFragmentsRestore(bundle: Bundle?): Bundle? {
+        bundle?.remove("android:support:fragments")
+        return bundle
     }
 
     override fun onStart() {
@@ -33,27 +60,27 @@ class MainActivity : ControllerActivity() {
 
     @Subscribe
     fun onTransitionEvent(transition: Transition) : Boolean = when (transition) {
-        is Show -> make(
+        is Show -> mainRouter.make(
             FragmentTransitions.Show(
-                container,
+                containerId,
                 this,
                 transition.enter,
                 transition.exit,
                 transition.ctrl
             )
         )
-        is Replace -> make(
+        is Replace -> mainRouter.make(
             FragmentTransitions.Replace(
-                container,
+                containerId,
                 this,
                 transition.enter,
                 transition.exit,
                 transition.ctrl
             )
         )
-        is Back -> make(
+        is Back -> mainRouter.make(
             FragmentTransitions.Back(
-                container,
+                containerId,
                 this,
                 transition.enter,
                 transition.exit
@@ -62,7 +89,7 @@ class MainActivity : ControllerActivity() {
     }
 
     override fun onBackPressed() {
-        if (stack.size() > 1 && !stack.peek()!!.onBackPressed()) {
+        if (mainRouter.size() > 1 && !mainRouter.top!!.onBackPressed()) {
             onTransitionEvent(Back())
         } else {
             super.onBackPressed()
