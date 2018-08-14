@@ -1,5 +1,6 @@
-include ':app', ':model', ':router', ':kotlin-extentions', ':misc', ':retrofit2-kotlin-coroutines-adapter', ':baseadapter'
+include ':app', ':model', ':router', ':kotlin-extentions', ':misc', ':retrofit2-kotlin-coroutines-adapter', ':baseadapter', ':request'
 project(":router").projectDir = file("controllers/router")
 project(":kotlin-extentions").projectDir = file("controllers/kotlin-extentions")
 project(":misc").projectDir = file("controllers/misc")
 project(":baseadapter").projectDir = file("baseadapter/library")
+project(":request").projectDir = file("controllers/request")

@@ -62,6 +62,7 @@ dependencies {
     implementation project(':model')
     implementation project(':misc')
     implementation project(':baseadapter')
+    implementation project(':request')
 
     kapt "com.android.databinding:compiler:$gradlePluginVer"
     kapt "com.google.dagger:dagger-compiler:$daggerVer"
