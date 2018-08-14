@@ -5,14 +5,14 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import com.controllers.Controller
 import com.controllers.async
+import com.example.ExampleController
 import com.example.R
+import com.example.Replace
 import com.example.databinding.LayoutAuthBinding
 import com.example.domain.App
 import com.example.github.profile.ProfileController
 import com.example.model.data.AccessToken
-
 import java.util.UUID
 
 /**
@@ -20,15 +20,15 @@ import java.util.UUID
  * 05.11.2016.
  */
 
-class AuthController : Controller<LayoutAuthBinding>() {
+class AuthController : ExampleController<LayoutAuthBinding>() {
 
     private val state = UUID.randomUUID().toString()
     val showProgress = ObservableBoolean()
 
-    val authUrl = "https://github.com/login/oauth/authorize?" +
-            "client_id=" + AccessToken.CLIENT_ID + "&" +
-            "redirect_uri=" + AccessToken.REDIRECT_URI + "&" +
-            "scope=" + "user%20user:follow%20"
+    val authUrl : String = "https://github.com/login/oauth/authorize?" +
+        "client_id=" + AccessToken.CLIENT_ID + "&" +
+        "redirect_uri=" + AccessToken.REDIRECT_URI + "&" +
+        "scope=" + "user%20user:follow%20"
 
     val webClient: WebViewClient = object : WebViewClient() {
         override fun onPageStarted(view: WebView, url: String, favicon: Bitmap?) {
@@ -42,7 +42,7 @@ class AuthController : Controller<LayoutAuthBinding>() {
 
     private fun requestAuth(code: String, state: String) = async {
         val user = App.require().api().login(code)
-        replace(ProfileController(user))
+        App.require().bus().post(Replace(ProfileController(user)))
     }
 
     override fun getLayoutId(): Int {

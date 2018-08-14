@@ -3,14 +3,16 @@ package com.example.domain;
 import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
-import android.support.annotation.*;
+import android.support.annotation.ColorInt;
+import android.support.annotation.ColorRes;
+import android.support.annotation.DimenRes;
+import android.support.annotation.PluralsRes;
+import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
-import com.squareup.leakcanary.LeakCanary;
 import com.example.model.analytics.Analytics;
-import com.example.model.event.Bus;
 import com.example.model.service.ContextModule;
 import com.example.model.service.DaggerModelComponent;
-
+import com.squareup.leakcanary.LeakCanary;
 import javax.inject.Inject;
 
 /**
@@ -25,7 +27,6 @@ public class App extends Application {
 
     private static AppComponent injector;
 
-    @Inject Bus bus;
     @Inject Analytics analytics;
 
     @Override
@@ -49,7 +50,6 @@ public class App extends Application {
                 .build();
 
         injector.inject(this);
-        analytics.init(this);
     }
 
     public static Context getContext() {
@@ -58,10 +58,6 @@ public class App extends Application {
 
     public static AppComponent require() {
         return injector;
-    }
-
-    public static Bus getBus() {
-        return context.bus;
     }
 
     public static String getStr(@StringRes int id) {

@@ -1,7 +1,5 @@
 package com.example.model.analytics;
 
-import android.app.Application;
-
 public interface Analytics {
 
     void setUserIdentifier(String userIdentifier);
@@ -10,5 +8,4 @@ public interface Analytics {
 
     void logEvent(Event event);
 
-    void init(Application app);
 }

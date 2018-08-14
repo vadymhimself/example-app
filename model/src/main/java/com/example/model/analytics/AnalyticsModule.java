@@ -1,9 +1,8 @@
 package com.example.model.analytics;
 
-import com.google.gson.Gson;
+import android.content.Context;
 import dagger.Module;
 import dagger.Provides;
-
 import javax.inject.Singleton;
 
 @Module
@@ -11,7 +10,7 @@ public class AnalyticsModule {
 
     @Provides
     @Singleton
-    Analytics provideAnalytics(Gson gson) {
-        return new AnalyticsAdapter(gson);
+    Analytics provideAnalytics(Context context) {
+        return new AnalyticsAdapter(context);
     }
 }

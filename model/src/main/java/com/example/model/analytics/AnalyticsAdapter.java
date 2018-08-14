@@ -1,18 +1,22 @@
 package com.example.model.analytics;
 
-import android.app.Application;
+import android.content.Context;
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
-import com.google.gson.Gson;
-import io.fabric.sdk.android.Fabric;
 import com.example.model.BuildConfig;
+import io.fabric.sdk.android.Fabric;
 
 public class AnalyticsAdapter implements Analytics {
 
-    private final Gson gson;
 
-    AnalyticsAdapter(Gson gson) {
-        this.gson = gson;
+    AnalyticsAdapter(Context context) {
+        Crashlytics crashlyticsKit = new Crashlytics.Builder()
+            .core(new CrashlyticsCore.Builder()
+                .disabled(BuildConfig.DEBUG)
+                .build())
+            .build();
+
+        Fabric.with(context, crashlyticsKit);
     }
 
     @Override
@@ -28,16 +32,5 @@ public class AnalyticsAdapter implements Analytics {
     @Override
     public void logEvent(Event event) {
         //TODO
-    }
-
-    @Override
-    public void init(Application app) {
-        Crashlytics crashlyticsKit = new Crashlytics.Builder()
-                .core(new CrashlyticsCore.Builder()
-                        .disabled(BuildConfig.DEBUG)
-                        .build())
-                .build();
-
-        Fabric.with(app, crashlyticsKit);
     }
 }

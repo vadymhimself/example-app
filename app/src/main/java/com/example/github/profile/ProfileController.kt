@@ -1,11 +1,11 @@
 package com.example.github.profile
 
 import android.databinding.Bindable
+import android.databinding.ViewDataBinding
 import android.support.v7.widget.Toolbar
 import android.view.MenuItem
 import com.controllers.Controller
 import com.example.R
-import com.example.databinding.LayoutProfileBinding
 import com.example.domain.App
 import com.example.github.repositories.RepoVM
 import com.example.model.data.User
@@ -13,7 +13,7 @@ import eu.theappshop.baseadapter.adapter.BaseAdapter
 
 class ProfileController(
   @Bindable val user: User
-) : Controller<LayoutProfileBinding>(), Toolbar.OnMenuItemClickListener {
+) : Controller<ViewDataBinding>(), Toolbar.OnMenuItemClickListener {
 
   val adapter: BaseAdapter<*>
 

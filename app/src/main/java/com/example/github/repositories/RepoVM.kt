@@ -3,7 +3,6 @@ package com.example.github.repositories
 import com.controllers.Controller
 import com.example.R
 import com.example.model.data.Repository
-import com.example.model.data.User
 import eu.theappshop.baseadapter.vm.DiffVM
 import eu.theappshop.baseadapter.vm.VM
 
