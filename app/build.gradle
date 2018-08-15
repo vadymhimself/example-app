@@ -1,8 +1,114 @@
-apply plugin: 'com.android.application'
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.selesse:gradle-git-changelog:0.2.1'
+        classpath 'com.github.triplet.gradle:play-publisher:1.2.0'
+    }
+}
 
+
+apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'com.github.triplet.play'
+apply plugin: 'com.selesse.git.changelog'
+apply from: 'https://raw.githubusercontent.com/passsy/gradle-GitVersioner/master/git-versioner.gradle'
+
+// Optional: configure the versioner
+ext.gitVersioner = [
+    //        defaultBranch           : "develop",  // default "master"
+    //        stableBranches          : ["master"], // default [], the feature branch postfix (-dm4(6)) will not be appended on stable branches, all commits are included into the version number calculation
+    //        yearFactor              : 1200, 	  // default "1000", increasing every 8.57h
+    //        snapshotEnabled         : false,      // default false, the "-SNAPSHOT" postfix
+    //        localChangesCountEnabled: false,       // default false, the (<commitCount>) before -SNAPSHOT
+    //        shortName: { gitVersion ->            // optional closure to build a short name
+    //            // allows you to add your own short name logic
+    //            // All properties from gitVersion are available
+    //            // can be used for CI `System.getenv("BUILD_NUMBER")`
+    //
+    //            // i.e. use short sha1
+    //            return gitVersion.commit.subSequence(0, 7)
+    //        }
+]
+
+changelog {
+    // The title appears at the top of the changelog.
+    // Default value: the name of the project.
+    title = "${project.name} (${new Date().format('dd-MM-yyyy')}) - Changelog since last git tag"
+
+    // The output directory where the report is generated.
+    // Default value: main resource directory, or the "build" directory
+    outputDirectory = file("$project.rootDir")
+
+    // The name of the report to generate.
+    // Default value: CHANGELOG.md
+    fileName = "release_notes.md"
+
+    // The range of commits the changelog should be composed of.
+    // Default value: 'beginning' (i.e. full changelog)
+    // Possible values: 'beginning', 'last_tag', 'xxx'
+    //
+    // 'last_tag' will use all the commits since the last tag,
+    // 'beginning' will use all commits since the initial commit (default)
+    // 'xxx' will use all the tags since the 'xxx' Git reference (i.e. `since = 1.2.0` will display the changelog
+    //       since the 1.2.0 tag, excluding 1.2.0)
+    since = 'last_tag'
+
+    // The output formats that should be generated.
+    // Default value: ['markdown']
+    // Possible values: 'html', 'markdown'.
+    formats = ['markdown']
+
+    // The Git "pretty" changelog commit format.
+    // Default value: %ad%x09%s (%an), which produces:
+    // Thu May 7 20:10:33 2015 -0400	Initial commit (Alex Selesse)
+    commitFormat = '%s (%an)'
+
+    // Specifies a commit format for Markdown.
+    // Default value: '* %s (%an)', which produces:
+    // * Initial commit (Alex Selesse)
+    markdown {
+        commitFormat = '* %s (%an)'
+    }
+
+    //    // Specifies a commit format for the HTML template.
+    //    // Default value: see commitFormat
+    //    html {
+    //        commitFormat = '%s (%an)'
+    //
+    //        // The Groovy HTML template used to generate the HTML changelog.
+    //        // See http://docs.groovy-lang.org/latest/html/documentation/template-engines.html
+    //        template = file("$projectDir/htmlTemplate").text
+    //    }
+
+    // A closure that returns 'true' if the line should be included in the changelog.
+    // Default value: accept everything, { true }
+    includeLines = {
+        !it.contains("Merge")
+    }
+
+    // A closure that transforms a changelog String.
+    // Default value: the identity closure, { it }
+    //
+    // For example, to remove '[ci skip]' from the changelog messages:
+    processLines = {
+        String input = it as String
+        if (input.contains('[ci skip] ')) {
+            input = input.minus('[ci skip] ')
+        }
+        input
+    }
+}
+
+preBuild.dependsOn project.tasks.getByName("generateChangelog")
+
+play {
+    // ...
+    track = 'beta' // or 'rollout' or 'beta' or 'alpha'
+}
 
 android {
     compileOptions.incremental = false
@@ -12,14 +118,22 @@ android {
         applicationId "com.example"
         minSdkVersion minVersion
         targetSdkVersion targetVersion
-        versionCode 1
+        versionCode gitVersion.version
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+//        playAccountConfig = playAccountConfigs.defaultAccountConfig
     }
     buildTypes {
+        debug {
+            ext.enableCrashlytics = false
+            testCoverageEnabled = false
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            ext.betaDistributionGroupAliases = "internal-testers"
+            ext.betaDistributionNotifications = true
+            ext.betaDistributionReleaseNotesFilePath = new File(project.rootDir, "release_notes.md").absolutePath
         }
     }
     dataBinding {
@@ -37,6 +151,11 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+    playAccountConfigs {
+        defaultAccountConfig {
+            jsonFile = new File(project.rootDir, "api-8760195053894850501-187936-11f294022d65.json")
+        }
     }
 }
 
