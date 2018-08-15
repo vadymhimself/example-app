@@ -1,0 +1,33 @@
+language: android
+jdk: oraclejdk8
+sudo: required
+dist: precise
+android:
+  components:
+  - platform-tools
+  - tools
+  - build-tools-27.0.3
+  - android-27
+  - extra-android-m2repository
+  - extra-google-google_play_services
+  - extra-google-m2repository
+licenses:
+  - android-sdk-preview-license-c81a61d9
+  - android-sdk-license-.+
+  - google-gdk-license-.+
+script:
+  - ./gradlew testDebug --info --stacktrace --no-daemon --parallel
+  - if [ "$TRAVIS_BRANCH" = "fabric_beta" ]; then ./gradlew crashlyticsUploadDistributionStagingRelease --stacktrace --no-daemon; fi
+  - if [ "$TRAVIS_BRANCH" = "play_beta" ]; then ./gradlew publishApkProdRelease --stacktrace --no-daemon; fi
+before_install:
+  - chmod +x gradlew
+git:
+  depth: 9999999
+notifications:
+  slack:
+    rooms:
+      - appshopdev:wBn1HeEbI32Dq2l2zPPrpMsJ
+    template:
+        - "Android build delivery <%{build_url}|#%{build_number}> by %{author} %{result} in %{duration}"
+    on_success: always
+    on_failure: change
