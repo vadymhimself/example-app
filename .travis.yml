@@ -16,7 +16,7 @@ licenses:
   - android-sdk-license-.+
   - google-gdk-license-.+
 script:
-  - ./gradlew testDebug --info --stacktrace --no-daemon --parallel
+  - ./gradlew assembleStagingRelease --info --stacktrace --no-daemon --parallel
   - if [ "$TRAVIS_BRANCH" = "fabric_beta" ]; then ./gradlew crashlyticsUploadDistributionStagingRelease --stacktrace --no-daemon; fi
   - if [ "$TRAVIS_BRANCH" = "play_beta" ]; then ./gradlew publishApkProdRelease --stacktrace --no-daemon; fi
 before_install:
