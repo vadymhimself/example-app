@@ -28,6 +28,8 @@
 # https://github.com/square/dagger
 
 -dontwarn dagger.internal.codegen.**
+-dontwarn java.lang.invoke.**
+
 -keepclassmembers,allowobfuscation class * {
     @javax.inject.* *;
     @dagger.* *;
@@ -44,4 +46,4 @@
 -dontwarn android.arch.util.paging.CountedDataSource
 -dontwarn android.arch.persistence.room.paging.LimitOffsetDataSource
 # keep persistance package for runtime lookups
--keep class com.example.model.persistance.** { *; }
+-keep class com.erkafarm.ozerki.model.persistance.** { *; }
